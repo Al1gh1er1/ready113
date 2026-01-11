@@ -1,0 +1,269 @@
+{
+  "input": {
+    "workflow": {
+      "1": {
+        "inputs": {
+          "ckpt_name": "animagineXL40_v4Opt.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple",
+        "_meta": {
+          "title": "CheckpointLoaderSimple"
+        }
+      },
+      "2": {
+        "inputs": {
+          "value": -2,
+          "clip": [
+            "1",
+            1
+          ]
+        },
+        "class_type": "CLIPSetLastLayer",
+        "_meta": {
+          "title": "CLIPSetLastLayer"
+        }
+      },
+      "4": {
+        "inputs": {
+          "text": "[{\"on\":true,\"lora\":\"None\",\"strength\":1}]",
+          "model": [
+            "1",
+            0
+          ],
+          "clip": [
+            "2",
+            0
+          ]
+        },
+        "class_type": "MultiLoRAStack",
+        "_meta": {
+          "title": "MultiLoRAStack"
+        }
+      },
+      "5": {
+        "inputs": {
+          "text": "View from below. A girl in bright bikini with a beaming smile playfully sits down. Thighs part softly, movements are joyful and light. A mood of carefree, trusting play.",
+          "clip": [
+            "4",
+            1
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIPTextEncode"
+        }
+      },
+      "6": {
+        "inputs": {
+          "text": "View from below. A girl in bright bikini with a beaming smile playfully sits down. Thighs part softly, movements are joyful and light. A mood of carefree, trusting play.",
+          "clip": [
+            "4",
+            1
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIPTextEncode"
+        }
+      },
+      "7": {
+        "inputs": {
+          "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
+          "clip": [
+            "4",
+            1
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIPTextEncode"
+        }
+      },
+      "9": {
+        "inputs": {
+          "text": "View from below. A girl in bright bikini with a beaming smile playfully sits down. Thighs part softly, movements are joyful and light. A mood of carefree, trusting play.",
+          "clip": [
+            "4",
+            1
+          ]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+          "title": "CLIPTextEncode"
+        }
+      },
+      "12": {
+        "inputs": {
+          "seed": 42913598,
+          "steps": 28,
+          "cfg": 5,
+          "sampler_name": "euler_ancestral",
+          "scheduler": "karras",
+          "denoise": 1,
+          "model": [
+            "4",
+            0
+          ],
+          "positive": [
+            "23",
+            0
+          ],
+          "negative": [
+            "7",
+            0
+          ],
+          "latent_image": [
+            "25",
+            0
+          ]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+          "title": "KSampler"
+        }
+      },
+      "14": {
+        "inputs": {
+          "samples": [
+            "12",
+            0
+          ],
+          "vae": [
+            "1",
+            2
+          ]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+          "title": "VAEDecode"
+        }
+      },
+      "15": {
+        "inputs": {
+          "images": [
+            "14",
+            0
+          ]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+          "title": "PreviewImage"
+        }
+      },
+      "16": {
+        "inputs": {
+          "value": 512,
+          "image": [
+            "14",
+            0
+          ],
+          "model": [
+            "4",
+            0
+          ],
+          "clip": [
+            "4",
+            1
+          ],
+          "vae": [
+            "1",
+            2
+          ],
+          "positive": [
+            "23",
+            0
+          ],
+          "negative": [
+            "7",
+            0
+          ],
+          "bbox_detector": [
+            "17",
+            0
+          ],
+          "sam_model_opt": [
+            "18",
+            0
+          ],
+          "segm_detector_opt": [
+            "19",
+            1
+          ]
+        },
+        "class_type": "FaceDetailer",
+        "_meta": {
+          "title": "FaceDetailer"
+        }
+      },
+      "17": {
+        "inputs": {
+          "filename": "bbox/nipples_yolov8s.pt"
+        },
+        "class_type": "UltralyticsDetectorProvider",
+        "_meta": {
+          "title": "UltralyticsDetectorProvider"
+        }
+      },
+      "18": {
+        "inputs": {
+          "filename": "sam_vit_b_01ec64.pth"
+        },
+        "class_type": "SAMLoader",
+        "_meta": {
+          "title": "SAMLoader"
+        }
+      },
+      "19": {
+        "inputs": {
+          "filename": "segm/nipples_yolov8s-seg.pt"
+        },
+        "class_type": "UltralyticsDetectorProvider",
+        "_meta": {
+          "title": "UltralyticsDetectorProvider"
+        }
+      },
+      "20": {
+        "inputs": {
+          "images": [
+            "16",
+            0
+          ]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+          "title": "PreviewImage"
+        }
+      },
+      "23": {
+        "inputs": {
+          "value": 3,
+          "conditioning_1": [
+            "9",
+            0
+          ],
+          "conditioning_2": [
+            "5",
+            0
+          ],
+          "conditioning_3": [
+            "6",
+            0
+          ]
+        },
+        "class_type": "ConditioningMultiCombine",
+        "_meta": {
+          "title": "ConditioningMultiCombine"
+        }
+      },
+      "25": {
+        "inputs": {
+          "value": 1024
+        },
+        "class_type": "EmptyLatentImage",
+        "_meta": {
+          "title": "EmptyLatentImage"
+        }
+      }
+    }
+  }
+}
