@@ -1,15 +1,4 @@
-# 1. Очистка системных кешей
-RUN --mount=type=cache,target=/var/cache/app,source=cache \
-    rm -rf /var/cache/app/* || true
 
-# 2. Очистка пакетного менеджера
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# 3. Очистка pip кеша
-RUN pip cache purge
-
-# 4. Очистка временных файлов
-RUN find /tmp -type f -delete 2>/dev/null || true
 # clean base image containing only comfyui, comfy-cli and comfyui-manager
 FROM runpod/worker-comfyui:5.5.1-base
 
